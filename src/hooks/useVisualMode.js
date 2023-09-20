@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const useVisualMode = (initialMode) => {
-  return { mode: initialMode };
+  const [mode, setMode] = useState(initialMode);
+
+  return { mode };
 };
 
 export default useVisualMode;
