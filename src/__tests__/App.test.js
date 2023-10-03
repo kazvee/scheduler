@@ -1,7 +1,17 @@
 import React from 'react';
-import { render, waitForElement, fireEvent, prettyDOM, getByText, getByPlaceholderText, getByAltText, getAllByTestId, queryByText, queryByAltText } from '@testing-library/react';
+import {
+  render,
+  waitForElement,
+  fireEvent,
+  getByText,
+  getByPlaceholderText,
+  getByAltText,
+  getAllByTestId,
+  queryByText,
+  queryByAltText,
+} from '@testing-library/react';
 import Application from 'components/Application';
-import axios from "axios";
+import axios from 'axios';
 
 describe('Application', () => {
   it('defaults to Monday and changes the schedule when a new day is selected', async () => {
@@ -15,7 +25,7 @@ describe('Application', () => {
   });
 
   it('loads data, books an interview and reduces the spots remaining for Monday by 1', async () => {
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
 
     await waitForElement(() => getByText(container, 'Archie Cohen'));
 
@@ -31,8 +41,6 @@ describe('Application', () => {
     fireEvent.click(getByAltText(appointment, 'Sylvia Palmer'));
     fireEvent.click(getByText(appointment, 'Save'));
 
-    // console.log(prettyDOM(appointment));
-    // debug();
     expect(getByText(appointment, 'Saving')).toBeInTheDocument();
 
     await waitForElement(() => getByText(appointment, 'Lydia Miller-Jones'));
@@ -42,8 +50,6 @@ describe('Application', () => {
     );
 
     expect(getByText(day, 'no spots remaining')).toBeInTheDocument();
-
-    // console.log(prettyDOM(day));
   });
 
   it('loads data, cancels an interview and increases the spots remaining for Monday by 1', async () => {
@@ -105,7 +111,7 @@ describe('Application', () => {
   it('shows the save error when failing to save an appointment', async () => {
     axios.put.mockRejectedValueOnce();
 
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
 
     await waitForElement(() => getByText(container, 'Archie Cohen'));
 
@@ -126,9 +132,6 @@ describe('Application', () => {
     await waitForElement(() => getByText(appointment, 'Error'));
     expect(getByText(appointment, 'Error')).toBeInTheDocument();
 
-    // console.log(prettyDOM(appointment));
-    // debug();
-
     fireEvent.click(queryByAltText(appointment, 'Close'));
 
     expect(getByText(appointment, 'Save')).toBeInTheDocument();
@@ -147,7 +150,7 @@ describe('Application', () => {
   it('shows the delete error when failing to delete an existing appointment', async () => {
     axios.delete.mockRejectedValueOnce();
 
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
     await waitForElement(() => getByText(container, 'Archie Cohen'));
 
     const appointment = getAllByTestId(container, 'appointment').find(
@@ -162,9 +165,6 @@ describe('Application', () => {
     fireEvent.click(queryByText(appointment, 'Confirm'));
 
     expect(getByText(appointment, 'Deleting')).toBeInTheDocument();
-
-    // console.log(prettyDOM(appointment));
-    // debug();
 
     await waitForElement(() => getByText(appointment, 'Error'));
     expect(getByText(appointment, 'Error')).toBeInTheDocument();
