@@ -3,11 +3,19 @@ $weights: (
   regular: 400,
   semi-bold: 600,
   bold: 700,
-  black: 900,
+  // black: 900,
+  // The 'black' in the $weights map was causing build issues. 
+  // Since the name black is also an identified colour keyword in CSS, when used in string interpolation, 
+  // it might be regarded as a colour keyword instead of being a key in the map, causing the build process to throw a warning.
+  // Using a different name for black that's not a CSS reserved colour name avoids the issue and also provides better semantics, 
+  // since in this context 'black' refers to a type of font weight, not a colour.
+  // Instead we will use 'darkest':
+  darkest: 900
 );
 
 @each $weight, $value in $weights {
   .text--#{$weight} {
-    font-weight: $value;
+    font-weight: #{"#{$value}"}; // Use string interpolation to ensure correct representation
+
   }
 }
