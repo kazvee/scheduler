@@ -10,7 +10,9 @@ Interview Scheduler is a full-stack app that connects students to mentors by ena
 - Uses a PostgreSQL database for persistent data storage
 - Implements Continuous Integration / Continuous Deployment (CI/CD) with built-in automated testing capabilities
 
-View a live demo [HERE](https://student-interview-scheduler.netlify.app/)
+✨ [Live Demo](https://student-interview-scheduler.netlify.app/) ✨  
+<strong>Please note:</strong> The app goes into "sleep" (idle) mode to conserve resources when inactive.
+If you're the first visitor in a while, the first launch may take a few extra seconds to load, but subsequent launches will be much quicker! ⚡
 
 ## Final Product
 
